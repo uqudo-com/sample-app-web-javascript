@@ -1,70 +1,146 @@
-# Getting Started with Create React App
+# Uqudo SDK ReactJs Demo Sample App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project contains sample applications for ReactJs that demonstrate the usage of the Uqudo SDK for passport onboarding with facial recognition.
 
-## Available Scripts
+## Prerequisites
 
-In the project directory, you can run:
+Before you begin, ensure you have the following:
 
-### `yarn start`
+- An Uqudo Access Token
+- Node.js and npm installed on your system
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Setup and Installation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Clone the project from the repository.
 
-### `yarn test`
+    ```sh
+    git clone https://github.com/uqudo-com/sample-app-web-javascript.git
+    ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Open the project in your IDE and navigate to sample-app-reactjs folder.
 
-### `yarn build`
+3. Replace the `ACCESS_TOKEN_HERE` placeholder with the actual access token in the `App.js` file.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    ```js
+    const ACCESS_TOKEN = "ACCESS_TOKEN_HERE"
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Running the app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Install the dependencies needed by running :
+   
+      ```js
+    npm install
+    ```
+      
+2. Start the app by running
+   
+      ```js
+    npm start
+    ```
 
-### `yarn eject`
+3. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Features
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Passport onboarding
+- Facial recognition
+- Handle Enrollment results
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## How it works
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Import the necessary modules and components from the Uqudo Web SDK and React. Additionally, import the required styles.
 
-## Learn More
+```javascript
+import uqudoSdkFactory, {
+  DocumentType,
+} from "uqudosdk-web";
+import { useCallback } from "react";
+import "./styles.css";
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Set your UQUDO_ACCESS_TOKEN, which is your access token, required for authentication with the Uqudo SDK.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```javascript
+const UQUDO_ACCESS_TOKEN = "ACCESS_TOKEN";
+```
 
-### Code Splitting
+Create an instance of the Uqudo SDK using the provided access token.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```javascript
+const uqudoSdk = uqudoSdkFactory.create({
+  accessToken: UQUDO_ACCESS_TOKEN,
+});
+```
 
-### Analyzing the Bundle Size
+Define the enrollmentPassport function, which is triggered when the "Enroll Passport" button is clicked.
+This function initiates the passport enrollment process with specific configuration options:
+- The documentType is set to Passport, and other options like disableExpiryValidation, forceUpload, and enableAgeVerification are configured according to your requirements.
+- The face recognition settings are also configured, including options for enableFacialRecognition, enrollFace, and maxAttempts.
+- Callback functions for onError and onSuccess are defined to handle errors and successful enrollment responses.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```javascript
+const enrollmentPassport = useCallback(async () => {
+  console.debug("enrollment start");
+  try {
+    const res = await uqudoSdk.enrollment({
+      scan: [
+        {
+          documentType: DocumentType.PASSPORT,
+          disableExpiryValidation: true,
+          forceUpload: false,
+          enableAgeVerification: 18,
+        },
+      ],
+      face: {
+        enableFacialRecognition: true,
+        enrollFace: false,
+        maxAttempts: 3,
+      },
+      returnDataForIncompleteSession: true,
+      onError: (error) => {
+        console.debug(
+          "error from callback function  message: ",
+          error.message,
+          " data: ",
+          error.data
+        );
+      },
+      onSuccess: (res) => {
+        console.debug("result from callback function ", res);
+      },
+    });
+    console.debug("result from await function ", res);
+  } catch (error) {
+    console.debug(
+      "error from try catch  message: ",
+      error.message,
+      " data: ",
+      error.data
+    );
+  }
+}, []);
+```
 
-### Making a Progressive Web App
+Create the React component App that renders the "Enroll Passport" button.
+When this button is clicked, it triggers the enrollmentPassport function.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```javascript
+function App() {
+  return (
+    <>
+      <div className="uq-container-example" id="uq_container">
+        <h3>Uqudo Web SDK Example</h3>
+        <button class="uq-passport-button" onClick={enrollmentPassport}>
+          Enroll Passport
+        </button>
+      </div>
+    </>
+  );
+}
+```
 
-### Advanced Configuration
+## Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Customize the project according to your needs, and refer to the [official Uqudo SDK documentation](http://docs.uqudo.com/docs/) for more details and configurations.
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
