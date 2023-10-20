@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <title>Vanilla JS</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+  <div className="uq-container-example" id="uq_container">
+    <h3>Uqudo Web SDK Example</h3>
+    <button id="uq-enrollment-passport-button" class="uq-passport-button"
+      onClick="enrollmentPassport()">
+      Enroll Passport
+    </button>
+  </div>
+  <script type="text/javascript" src="./UqudoSDK.js"></script>
+  <script>
+    const uqudoSdkFactory = UqudoSDK.default;
+    const DocumentType = UqudoSDK.DocumentType;
+
+    // TODO: Copy the Access token here
+    const UQUDO_ACCESS_TOKEN = "ACCESS_TOKEN";
+
+    const uqudoSdk = uqudoSdkFactory.create({
+      accessToken: UQUDO_ACCESS_TOKEN,
+    });
+
+    function enrollmentPassport() {
+      console.debug("enrollment start");
+      uqudoSdk.enrollment({
+        scan: [
+          {
+            documentType: DocumentType.PASSPORT,
+            disableExpiryValidation: true,
+            forceUpload: false,
+            enableAgeVerification: 18,
+          },
+        ],
+        face: {
+          enableFacialRecognition: true,
+          enrollFace: false,
+          maxAttempts: 3,
+        },
+        returnDataForIncompleteSession: true,
+        onError: function (error) {
+          console.debug(
+            "error from callback function  message: ",
+            error.message,
+            " data: ",
+            error.data
+          );
+        },
+        onSuccess: function (res) {
+          console.debug("result from callback function ", res);
+        },
+      }).then(function (res) {
+        console.debug("result from await function ", res);
+      })
+        .catch(function (error) {
+          console.debug(
+            "error from try catch  message: ",
+            error.message,
+            " data: ",
+            error.data
+          );
+        })
+    }
+  </script>
+</body>
+
+</html>

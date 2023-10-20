@@ -1,0 +1,29 @@
+.uq-app .uq-main {
+}
+
+html {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+.uq-container-example {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.uq-passport-button {
+  width: 400px;
+  height: 50px;
+  background-color: #44546c;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
