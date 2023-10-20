@@ -7,7 +7,7 @@ This project contains sample applications for VanillaJs that demonstrate the usa
 Before you begin, ensure you have the following:
 
 - An Uqudo Access Token.
-- file UqudoSDK.js contain code of sdk web library.
+- file UqudoSDK.js contains code of SDK web library.
 
 ## Setup and Installation
 
@@ -27,7 +27,7 @@ Before you begin, ensure you have the following:
 
 ## Running the app
 
-run server localhost in this folder you can use live-server or another tools.
+run server localhost in this folder you can use live-server or another tool.
 
 ## Features
 
@@ -101,7 +101,7 @@ This function initiates the passport enrollment process with specific configurat
     }
 ```
 
-Create the HTML codes that renders the "Enroll Passport" button.
+Create the HTML codes that render the "Enroll Passport" button.
 When this button is clicked, it triggers the enrollmentPassport function.
 
 ```javascript
