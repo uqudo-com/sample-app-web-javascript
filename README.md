@@ -4,7 +4,7 @@ This project contains sample applications for JavaScript that demonstrate the us
 
 You can check the folder related to framework you using.
 
-- [react js integrations](./reactJS/README.md)
+- [React js integration](./reactJS/README.md)
 
 
-- [javascript integration](./vanillaJS/README.md)
+- [Javascript integration](./vanillaJS/README.md)
