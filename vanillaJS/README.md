@@ -107,7 +107,7 @@ When this button is clicked, it triggers the enrollmentPassport function.
 ```javascript
   <div className="uq-container-example" id="uq_container">
     <h3>Uqudo Web SDK Example</h3>
-    <button id="uq-enrollment-passport-button" class="uq-passport-button"
+    <button id="uq-enrollment-passport-button" className="uq-passport-button"
       onClick="enrollmentPassport()">
       Enroll Passport
     </button>
