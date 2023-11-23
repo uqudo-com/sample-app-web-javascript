@@ -132,7 +132,7 @@ function App() {
     <>
       <div className="uq-container-example" id="uq_container">
         <h3>Uqudo Web SDK Example</h3>
-        <button class="uq-passport-button" onClick={enrollmentPassport}>
+        <button className="uq-passport-button" onClick={enrollmentPassport}>
           Enroll Passport
         </button>
       </div>
