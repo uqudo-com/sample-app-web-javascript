@@ -12,6 +12,6 @@
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",
-    "uqudosdk-web": "^3.3.2"
+    "uqudosdk-web": "^3.6.0"
   }
 }
